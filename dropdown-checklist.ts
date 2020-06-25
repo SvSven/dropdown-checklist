@@ -1,3 +1,3 @@
-import { DropdownChecklist } from './src/DropdownChecklist.js';
+import { DropdownChecklist } from './src/DropdownChecklist.js'
 
-window.customElements.define('dropdown-checklist', DropdownChecklist);
+window.customElements.define('dropdown-checklist', DropdownChecklist)

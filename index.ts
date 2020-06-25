@@ -1,1 +1,1 @@
-export { DropdownChecklist } from './src/DropdownChecklist.js';
+export { DropdownChecklist } from './src/DropdownChecklist.js'
