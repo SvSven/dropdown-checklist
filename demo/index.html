@@ -15,12 +15,25 @@
       import { html, render } from 'lit-html'
       import '../dist/dropdown-checklist.js'
 
-      const title = 'Hello owc World!'
+      const label = 'Options'
+
+      const options = [
+        { label: 'Hello there', value: 'hello', checked: true },
+        { label: 'General Kenobi', value: 'kenobi', checked: false },
+      ]
+
+      const handleChange = (selected) => {
+        console.log(selected)
+      }
+
       render(
         html`
-          <dropdown-checklist .title=${title}>
-            some more light-dom
-          </dropdown-checklist>
+          <dropdown-checklist
+            .label=${label}
+            .options=${options}
+            .onChange=${handleChange}
+          ></dropdown-checklist>
+          <p>hello world</p>
         `,
         document.querySelector('#demo'),
       )
