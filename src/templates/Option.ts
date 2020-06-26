@@ -10,7 +10,7 @@ export const Option = (option: CheckboxOption, handleChange: Function) =>
           value="${option.value}"
           ?checked=${option.checked}
           @change=${(e: Event) =>
-            handleChange((<HTMLInputElement>e.target).value)}
+            handleChange((e.target as HTMLInputElement).value)}
         />
         ${option.label}
       </label>

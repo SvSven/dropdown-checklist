@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    browser: true,
+    node: true,
+  },
   root: true,
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'import', 'html'],
@@ -13,9 +17,13 @@ module.exports = {
     // disable the rule for all files
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/member-delimiter-style': 'none',
+    '@typescript-eslint/member-delimiter-style': 0,
     'import/named': 'off',
     'import/no-unresolved': 'off',
-    'import/extensions': ['error', 'always', { ignorePackages: true }],
+    'import/extensions': ['error', 'never', { ignorePackages: true }],
+    'no-unused-vars': [
+      'warn',
+      { vars: 'all', args: 'all', ignoreRestSiblings: false },
+    ],
   },
 }

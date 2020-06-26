@@ -11,7 +11,7 @@ export class DropdownChecklist extends LitElement {
 
   @property({ type: Boolean }) menuOpen = false
 
-  public selectedOptions: String[] = []
+  public selectedOptions: string[] = []
 
   updated() {
     this.selectedOptions = this.options

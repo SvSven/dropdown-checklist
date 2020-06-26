@@ -1,7 +1,7 @@
-import { html, fixture, expect, oneEvent } from '@open-wc/testing'
+import { html, fixture, expect } from '@open-wc/testing'
 
-import { DropdownChecklist } from '../src/DropdownChecklist.js'
-import '../dropdown-checklist.js'
+import { DropdownChecklist } from '../src/DropdownChecklist'
+import '../dropdown-checklist'
 
 import * as template from '../src/templates'
 
