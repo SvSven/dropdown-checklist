@@ -84,7 +84,7 @@ describe('DropdownChecklist', async () => {
 })
 
 describe('Button template', async () => {
-  const Button = await fixture(template.Button('Select', () => true))
+  const Button = await fixture(template.Button('Select', () => true, false))
 
   it('renders the Button with correct label', () => {
     expect(Button.textContent).to.equal('Select')

@@ -1,17 +1,22 @@
 import { html } from 'lit-html'
+import { classMap } from 'lit-html/directives/class-map'
 import { CheckboxOption } from '../types'
 
-export const Option = (option: CheckboxOption, handleChange: Function) =>
-  html`
-    <li class="option">
-      <label>
+export const Option = (option: CheckboxOption, handleChange: Function) => {
+  const classes = { option: true, 'option-checked': option.checked }
+
+  return html`
+    <li>
+      <label class=${classMap(classes)}>
         <input
+          class="option-checkbox"
           type="checkbox"
           value="${option.value}"
           ?checked=${option.checked}
           @change=${() => handleChange(option)}
         />
-        ${option.label}
+        <span class="option-text">${option.label}</span>
       </label>
     </li>
   `
+}

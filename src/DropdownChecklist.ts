@@ -1,5 +1,6 @@
 import { html, css, LitElement, property, PropertyValues } from 'lit-element'
 import { CheckboxOption } from './types'
+import { defaultTheme } from './defaultTheme'
 import * as template from './templates'
 
 export class DropdownChecklist extends LitElement {
@@ -45,7 +46,11 @@ export class DropdownChecklist extends LitElement {
   render() {
     return html`
       <div class="dropdown">
-        ${template.Button(this.label, this.__toggleMenu.bind(this))}
+        ${template.Button(
+          this.label,
+          this.__toggleMenu.bind(this),
+          this.menuOpen,
+        )}
         ${this.menuOpen
           ? html`
               <ul class="menu">
@@ -62,33 +67,76 @@ export class DropdownChecklist extends LitElement {
   }
 
   static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
+    return [
+      defaultTheme,
+      css`
+        :host {
+          display: block;
+          font-family: var(--font-family);
+        }
 
-      .dropdown {
-        position: relative;
-      }
+        .dropdown {
+          display: inline-block;
+          position: relative;
+        }
 
-      .toggle {
-      }
+        .toggle {
+          display: inline-block;
+          cursor: pointer;
+          padding: var(--button-padding);
+          background: var(--button-background);
+          border: var(--button-border);
+          border-radius: var(--button-border-radius);
+          color: var(--button-font-color);
+          font-size: var(--button-font-size);
+          transition: var(--button-transition);
+        }
 
-      .menu {
-        position: absolute;
-        list-style: none;
-        padding: 1em;
-        background: #fff;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-      }
+        .toggle:hover,
+        .toggle-active {
+          background: var(--button-background-hover);
+          border: var(--button-border-hover);
+          color: var(--button-font-color-hover);
+        }
 
-      .option {
-        margin-bottom: 0.5em;
-      }
+        .menu {
+          position: absolute;
+          width: max-content;
+          list-style: none;
+          margin: 0;
+          padding: var(--menu-padding);
+          background: var(--menu-background);
+          box-shadow: var(--menu-box-shadow);
+          font-size: var(--menu-font-size);
+          color: var(--menu-font-color);
+        }
 
-      .option:last-child {
-        margin-bottom: 0;
-      }
-    `
+        .option {
+          display: flex;
+          align-items: center;
+          padding: var(--option-padding);
+          cursor: pointer;
+        }
+
+        .option:hover {
+          background: var(--option-background-hover);
+          color: var(--option-font-color-hover);
+        }
+
+        .option-checked {
+          background: var(--option-background-checked);
+          color: var(--option-font-color-checked);
+        }
+
+        .option-checkbox,
+        .option-text {
+          display: inline-block;
+        }
+
+        .option-checkbox {
+          margin-right: 8px;
+        }
+      `,
+    ]
   }
 }
