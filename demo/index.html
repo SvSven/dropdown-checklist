@@ -3,40 +3,63 @@
   <head>
     <meta charset="utf-8" />
     <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
       body {
         background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+        color: #212529;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      .container {
+        width: 90%;
+        max-width: 600px;
+        margin: auto;
+      }
+      .output {
+        margin-top: 100px;
       }
     </style>
   </head>
   <body>
-    <div id="demo"></div>
+    <div class="container">
+      <h1>dropdown-checklist demo</h1>
+      <dropdown-checklist label="Select"></dropdown-checklist>
+
+      <div class="output">
+        <h2>Checked options:</h2>
+        <ul class="checked"></ul>
+      </div>
+    </div>
 
     <script type="module">
-      import { html, render } from 'lit-html'
       import '../dist/dropdown-checklist'
 
-      const label = 'Options'
+      const renderCheckedOptions = (options) => {
+        const result = options
+          .filter((i) => i.checked)
+          .map((i) => `<li>${i.label}</li>`)
+
+        document.querySelector('.checked').innerHTML = result.join('')
+      }
 
       const options = [
         { label: 'Hello there', value: 'hello', checked: true },
         { label: 'General Kenobi', value: 'kenobi', checked: false },
       ]
 
-      const handleChange = (selected) => {
-        console.log(selected)
-      }
+      renderCheckedOptions(options)
 
-      render(
-        html`
-          <dropdown-checklist
-            .label=${label}
-            .options=${options}
-            .onChange=${handleChange}
-          ></dropdown-checklist>
-          <p>hello world</p>
-        `,
-        document.querySelector('#demo'),
-      )
+      const checklist = document.querySelector('dropdown-checklist')
+
+      checklist.options = options
+      checklist.handleChange = renderCheckedOptions
     </script>
   </body>
 </html>
