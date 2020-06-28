@@ -1,4 +1,4 @@
-import { html, css, LitElement, property } from 'lit-element'
+import { html, css, LitElement, property, PropertyValues } from 'lit-element'
 import { CheckboxOption } from './types'
 import * as template from './templates'
 
@@ -11,25 +11,35 @@ export class DropdownChecklist extends LitElement {
 
   @property({ type: Boolean }) menuOpen = false
 
-  public selectedOptions: string[] = []
+  constructor() {
+    super()
 
-  updated() {
-    this.selectedOptions = this.options
-      .filter((i: CheckboxOption) => i.checked)
-      .map((i: CheckboxOption) => i.value)
+    const defaultChangeHandler = () => {
+      const event = new CustomEvent('SelectionChanged', {
+        detail: {
+          options: this.options,
+        },
+      })
+      this.dispatchEvent(event)
+    }
+
+    this.handleChange = this.handleChange || defaultChangeHandler
+  }
+
+  updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('options')) {
+      this.handleChange(this.options)
+    }
   }
 
   __toggleMenu() {
     this.menuOpen = !this.menuOpen
-    this.requestUpdate()
   }
 
-  __selectOption(value: string) {
-    this.selectedOptions = this.selectedOptions.includes(value)
-      ? this.selectedOptions.filter((i) => i !== value)
-      : [...this.selectedOptions, value]
-
-    this.handleChange(this.selectedOptions)
+  __selectOption(option: CheckboxOption) {
+    const oldOptions = [...this.options]
+    option.checked = !option.checked
+    this.requestUpdate('options', oldOptions)
   }
 
   render() {

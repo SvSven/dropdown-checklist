@@ -1,4 +1,4 @@
-import { html, fixture, expect } from '@open-wc/testing'
+import { html, fixture, expect, oneEvent } from '@open-wc/testing'
 
 import { DropdownChecklist } from '../src/DropdownChecklist'
 import '../dropdown-checklist'
@@ -23,7 +23,6 @@ describe('DropdownChecklist', async () => {
     <dropdown-checklist
       .options=${mockOptions}
       .label="Dropdown"
-      .handleChange=${() => true}
     ></dropdown-checklist>
   `)
 
@@ -46,11 +45,6 @@ describe('DropdownChecklist', async () => {
     )!.to.equal('No available options.')
   })
 
-  it('adds options where checked is true to selectedOptions', () => {
-    expect(Dropdown.selectedOptions).to.contain(mockOptions[0].value)
-    expect(Dropdown.selectedOptions).to.not.contain(mockOptions[1].value)
-  })
-
   it('toggles the menu open and closed', async () => {
     expect(Dropdown.menuOpen).to.be.false
     expect(Dropdown.shadowRoot!.querySelector('.menu'))!.to.be.null
@@ -65,18 +59,23 @@ describe('DropdownChecklist', async () => {
   })
 
   it('toggles selected options', async () => {
-    Dropdown.__selectOption(mockOptions[1].value)
-    expect(Dropdown.selectedOptions).to.contain(mockOptions[1].value)
+    Dropdown.__selectOption(mockOptions[1])
+    expect(Dropdown.options[1].checked).to.be.true
 
-    Dropdown.__selectOption(mockOptions[1].value)
-    expect(Dropdown.selectedOptions).to.not.contain(mockOptions[1].value)
+    const { detail } = await oneEvent(Dropdown, 'SelectionChanged')
+    expect(detail.options).to.not.be.null
+    expect(detail.options[1].checked).to.be.true
+
+    Dropdown.__selectOption(mockOptions[1])
+    expect(Dropdown.options[1].checked).to.be.false
+    expect(detail.options[1].checked).to.be.false
 
     await Dropdown.__toggleMenu()
     const el = Dropdown.shadowRoot?.querySelector(
       `input[value="${mockOptions[1].value}"]`,
     )
     el!.dispatchEvent(new Event('change'))
-    expect(Dropdown.selectedOptions).to.contain(mockOptions[1].value)
+    expect(Dropdown.options[1].checked).to.be.true
   })
 
   it('DropdownChecklist passes the a11y audit', async () => {
