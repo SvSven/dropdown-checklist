@@ -16,6 +16,7 @@ export const defaultTheme = css`
     --button-border-hover: solid 2px #1565c0;
     --button-font-color-hover: #ffffff;
 
+    --menu-margin: 0.5em 0 0;
     --menu-padding: 0;
     --menu-background: #ffffff;
     --menu-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),

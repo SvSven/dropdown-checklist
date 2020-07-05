@@ -103,7 +103,7 @@ export class DropdownChecklist extends LitElement {
           position: absolute;
           width: max-content;
           list-style: none;
-          margin: 0;
+          margin: var(--menu-margin);
           padding: var(--menu-padding);
           background: var(--menu-background);
           box-shadow: var(--menu-box-shadow);
