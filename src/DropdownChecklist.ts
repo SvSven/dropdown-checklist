@@ -1,4 +1,12 @@
-import { html, css, LitElement, property, PropertyValues } from 'lit-element'
+import {
+  html,
+  css,
+  LitElement,
+  property,
+  PropertyValues,
+  TemplateResult,
+  CSSResultArray,
+} from 'lit-element'
 import { CheckboxOption } from './types'
 import { defaultTheme } from './defaultTheme'
 import * as template from './templates'
@@ -8,14 +16,14 @@ export class DropdownChecklist extends LitElement {
 
   @property({ type: String }) label = 'Select'
 
-  @property({ type: Function }) handleChange!: Function
+  @property({ type: Function }) handleChange!: (x: CheckboxOption[]) => void
 
   @property({ type: Boolean }) menuOpen = false
 
   constructor() {
     super()
 
-    const defaultChangeHandler = () => {
+    const defaultChangeHandler = (): void => {
       const event = new CustomEvent('SelectionChanged', {
         detail: {
           options: this.options,
@@ -27,23 +35,23 @@ export class DropdownChecklist extends LitElement {
     this.handleChange = this.handleChange || defaultChangeHandler
   }
 
-  updated(changedProperties: PropertyValues) {
+  updated(changedProperties: PropertyValues): void {
     if (changedProperties.has('options')) {
       this.handleChange(this.options)
     }
   }
 
-  __toggleMenu() {
+  __toggleMenu(): void {
     this.menuOpen = !this.menuOpen
   }
 
-  __selectOption(option: CheckboxOption) {
+  __selectOption(option: CheckboxOption): void {
     const oldOptions = [...this.options]
     option.checked = !option.checked
     this.requestUpdate('options', oldOptions)
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="dropdown">
         ${template.Button(
@@ -66,7 +74,7 @@ export class DropdownChecklist extends LitElement {
     `
   }
 
-  static get styles() {
+  static get styles(): CSSResultArray {
     return [
       defaultTheme,
       css`

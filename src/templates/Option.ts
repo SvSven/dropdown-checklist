@@ -1,8 +1,11 @@
-import { html } from 'lit-html'
+import { html, TemplateResult } from 'lit-html'
 import { classMap } from 'lit-html/directives/class-map'
 import { CheckboxOption } from '../types'
 
-export const Option = (option: CheckboxOption, handleChange: Function) => {
+export const Option = (
+  option: CheckboxOption,
+  handleChange: (x: CheckboxOption) => void,
+): TemplateResult => {
   const classes = { option: true, 'option-checked': option.checked }
 
   return html`
