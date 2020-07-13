@@ -20,6 +20,8 @@ export class DropdownChecklist extends LitElement {
 
   @property({ type: Boolean }) menuOpen = false
 
+  @property({ type: Boolean }) hasIcon = true
+
   constructor() {
     super()
 
@@ -58,6 +60,7 @@ export class DropdownChecklist extends LitElement {
           this.label,
           this.__toggleMenu.bind(this),
           this.menuOpen,
+          this.hasIcon,
         )}
         ${this.menuOpen
           ? html`
@@ -89,7 +92,8 @@ export class DropdownChecklist extends LitElement {
         }
 
         .toggle {
-          display: inline-block;
+          display: flex;
+          align-items: center;
           cursor: pointer;
           padding: var(--button-padding);
           background: var(--button-background);
@@ -105,6 +109,19 @@ export class DropdownChecklist extends LitElement {
           background: var(--button-background-hover);
           border: var(--button-border-hover);
           color: var(--button-font-color-hover);
+        }
+
+        .toggle .icon {
+          margin-left: 0.3em;
+          stroke-width: 3;
+          stroke: var(--button-font-color);
+          width: 1.2em;
+          height: 1.2em;
+        }
+
+        .toggle:hover .icon,
+        .toggle-active .icon {
+          stroke: var(--button-font-color-hover);
         }
 
         .menu {

@@ -84,10 +84,25 @@ describe('DropdownChecklist', async () => {
 })
 
 describe('Button template', async () => {
-  const Button = await fixture(template.Button('Select', () => true, false))
+  const Button = await fixture(
+    template.Button('Select', () => true, false, true),
+  )
 
   it('renders the Button with correct label', () => {
-    expect(Button.textContent).to.equal('Select')
+    expect(Button.querySelector('.toggle-label')?.textContent).to.equal(
+      'Select',
+    )
+  })
+
+  it('renders an icon on the toggle button if set to true', () => {
+    expect(Button.querySelector('.icon')).to.not.be.null
+  })
+
+  it('does not render an icon on the toggle button if set to false', async () => {
+    const btn = await fixture(
+      template.Button('Select', () => true, false, false),
+    )
+    expect(btn.querySelector('.icon')).to.be.null
   })
 
   it('Button passes a11y audit', () => {
