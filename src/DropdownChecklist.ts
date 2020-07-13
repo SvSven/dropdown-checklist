@@ -35,6 +35,7 @@ export class DropdownChecklist extends LitElement {
     }
 
     this.handleChange = this.handleChange || defaultChangeHandler
+    this.__handleClickOutside = this.__handleClickOutside.bind(this)
   }
 
   updated(changedProperties: PropertyValues): void {
@@ -51,6 +52,22 @@ export class DropdownChecklist extends LitElement {
     const oldOptions = [...this.options]
     option.checked = !option.checked
     this.requestUpdate('options', oldOptions)
+  }
+
+  __handleClickOutside(event: any): void {
+    if (this.menuOpen && event.target !== this) {
+      this.__toggleMenu()
+    }
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback()
+    document.addEventListener('click', this.__handleClickOutside)
+  }
+
+  disconnectedCallback(): void {
+    document.removeEventListener('click', this.__handleClickOutside)
+    super.disconnectedCallback()
   }
 
   render(): TemplateResult {
