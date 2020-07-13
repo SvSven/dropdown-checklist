@@ -25,9 +25,9 @@ export const defaultTheme = css`
     --menu-font-color: #353535;
 
     --option-padding: 1em;
-    --option-background-hover: #e8eaf6;
+    --option-background-hover: #ddddddb5;
     --option-font-color-hover: #353535;
-    --option-background-checked: #e8eaf6;
+    --option-background-checked: #ecececb5;
     --option-font-color-checked: #353535;
   }
 `
